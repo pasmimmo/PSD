@@ -2,41 +2,53 @@
 #include <stdlib.h>
 #include <string.h>
 #include "item.h"
-struct studente
+
+struct generic_item
 {
-    char nome[20];
-    int matricola;
+    char stringValue[20];
+    int numericValue;
 };
 
-item createItem(char *nome, int matricola)
+item item_create(char *string, int numeric)
 {
-    item stud=malloc(sizeof(struct studente));
-    strcpy(stud->nome, nome);
-    stud->matricola=matricola;
-    return stud;
+    item anItem = malloc(sizeof(struct generic_item));
+    strcpy(anItem->stringValue, string);
+    anItem->numericValue = numeric;
+    return anItem;
 }
 
-int eq(item x, item y)
+item item_clone(item anItem)
 {
-    if (strcmp(x->nome, y->nome) == 0 && x->matricola == y->matricola)
+    return item_create(anItem->stringValue, anItem->numericValue);
+}
+
+
+/*Define in item structure a valute of comparison,
+in our case "numericValue"*/
+int item_compare(item x, item y)
+{
+    if (x->numericValue == y->numericValue)
+        return 0;
+    else if (x->numericValue > y->numericValue)
         return 1;
-    return 0;
+    else if (x->numericValue < y->numericValue)
+        return 2;
+    else
+        return -1;
 }
 
-item input_item()
+item input_acquire()
 {
-    int matricola;
-    char nome[20];
-    printf("Dammi un nome:\n");
-    scanf("%s",nome);
-    printf("inserisci la matricola\n");
-    scanf("%d",&matricola);
-    return createItem(nome,matricola);
+    int tempNumeric;
+    char tempString[20];
+    printf("Give me a String Value:\n");
+    scanf("%s",&tempString);
+    printf("insert a Numeric Value\n");
+    scanf("%d", &tempNumeric);
+    return createItem(tempString, tempNumeric);
 }
 
-void output_item(item x)
+void item_print(item x)
 {
-    printf("nome: %s\tmatr: %d\n",x->nome,x->matricola);
+    printf("String Value is: %s\tNumeric Value is: %d\n", x->stringValue, x->numericValue);
 }
-
-//Ciao
