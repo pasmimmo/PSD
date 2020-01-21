@@ -37,15 +37,16 @@ int item_compare(item x, item y)
         return -1;
 }
 
-item input_acquire()
+item item_acquire()
 {
     int tempNumeric;
     char tempString[20];
     printf("Give me a String Value:\n");
-    scanf("%s",&tempString);
+    scanf("%s",tempString);
     printf("insert a Numeric Value\n");
     scanf("%d", &tempNumeric);
-    return createItem(tempString, tempNumeric);
+    item newItem=item_create(tempString, tempNumeric);
+    return newItem;
 }
 
 void item_print(item x)
